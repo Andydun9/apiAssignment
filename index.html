@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>API</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Sports Giphys</h1>
+
+        <div id="search-view"></div>
+        <!-- form for adding a sport -->
+        <form id="search-form">
+            <label for="sports-input">Add a Sport</label>
+            <input type="text" id="sports-input">
+            <br>
+
+            <!-- button to add a new sport -->
+
+            <input id="add-sport" type="submit" value="Add a sport">
+            <div class="gifs-appear-here"></div>
+        </form>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+
+            // initial array of sports
+
+            var sports = ["Hockey", "Baseball", "Football"];
+
+            // displaying sports list
+
+            
+
+            function renderButtons() {
+                $("#search-view").empty();
+
+                // looping through sports
+
+                for (var i = 0; i < sports.length; i++) {
+
+                    var a = $("<button>");
+                    a.addClass("sport-input");
+                    a.attr("data-name", sports[i]);
+                    a.text(sports[i]);
+                    $("#search-view").append(a);
+
+                }
+            }
+
+            $("#add-sport").click(function(event){
+                event.preventDefault();
+
+                var sport = $("#sports-input").val().trim();
+
+                sports.push(sport);
+
+                renderButtons();
+            });
+
+            renderButtons();
+
+
+
+// adding giphs 
+
+ $("button").click(function(){
+    var sports = $(this).attr("data-name");
+
+var queryURL= "https://api.giphy.com/v1/gifs/search?q=" +
+sports + "&api_key=zb0xNVFJspwOiB4l8b0Ow13KnlOrX7Ki&limit=10"
+
+$.ajax({
+    url: queryURL,
+    method: "GET"
+})
+
+.then(function(response){
+    console.log(queryURL);
+    console.log(response);
+
+    var results = response.data;
+
+// looping through each result
+    for (var i=0; i<results.length; i++){
+          var sportsDiv= $("<div>");
+
+      
+        
+
+        var sportsImage= $("<img>");
+        sportsImage.attr("src", results[i].images.fixed_height.url);
+       
+       sportsDiv.append(sportsImage);
+      
+
+        $(".gifs-appear-here").prepend(sportsDiv);
+
+        console.log("sports image "+ sportsDiv)
+    }
+ 
+
+})
+
+ })
+</script>
+
+
+    </div>
+    
+    
+</body >
+
+</html >
