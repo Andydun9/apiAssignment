@@ -1,0 +1,29 @@
+/* /
+font-family: 'Noto Serif', serif;
+font-family: 'Dosis', sans-serif;
+ */
+
+body{
+    background-color: darkgreen
+}
+
+.container {
+    background-color: azure;
+    width:75%;
+    margin: auto;
+    font-family: 'Noto Serif', serif;
+    font-size: 1.5em;
+}
+
+button{
+    background-color: crimson;
+    font-family: 'Noto Serif', serif;
+    font-size: .5em;
+    margin: 5px;
+    border: black solid 2px;
+}
+
+button:hover{
+    background-color: blue;
+    color: aliceblue;
+}
