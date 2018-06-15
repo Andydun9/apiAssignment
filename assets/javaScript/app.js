@@ -25,12 +25,13 @@
                  }
              }
  
-             $("button").click(function(event){
-                 event.preventDefault();
+             $(document).on("click", "#add-sport", function(event){
+                console.log(event)
+                event.preventDefault();
  
                  var sport = $("#sports-input").val().trim();
  
-                 sports.push(sports);
+                 sports.push(sport);
  
                  renderButtons();
              });
@@ -41,11 +42,11 @@
  
  // adding giphs 
  
-  $("button").click(function(){
-     var sports = $(this).attr("data-name");
+  $(document).on("click", ".sport-input", function(){
+     var searchTerm = $(this).attr("data-name");
  
  var queryURL= "https://api.giphy.com/v1/gifs/search?q=" +
- sports + "&api_key=zb0xNVFJspwOiB4l8b0Ow13KnlOrX7Ki&limit=10"
+ searchTerm + "&api_key=zb0xNVFJspwOiB4l8b0Ow13KnlOrX7Ki&limit=10"
  
  $.ajax({
      url: queryURL,
@@ -62,11 +63,18 @@
      for (var i=0; i<results.length; i++){
            var sportsDiv= $("<div>");
  
-       
+      // console.log(results[i])
          
  
          var sportsImage= $("<img>");
-         sportsImage.attr("src", results[i].images.fixed_height.url);
+         sportsImage.attr(
+             {
+                "src" : results[i].images.fixed_height.url, 
+                "data-animate": results[i].images.fixed_height.url, 
+                "data-state": "animate",
+                "data-still":results[i].images.fixed_height_still.url
+             }
+         );
         
         sportsDiv.append(sportsImage);
        sportsImage.addClass("hockey")
@@ -77,17 +85,7 @@
      }
  
   //starts and stops gifs
-     $(".hockey").click(function(){
-     var state= $(this).attr("data-state");
-     if (state==="still"){
-         $(this).attr("src", $(this).attr("data-animate"))
-         $(this).attr("data-state", "animate");
-     }
-     else{
-         $(this).attr("src", $(this).attr("data-still"))
-         $(this).attr("data-state", "still")
-     }
- })
+
  })
  
  
@@ -95,3 +93,16 @@
  
  
   })
+
+  $(document).on("click", ".hockey", function(){
+      console.log($(this))
+    var state= $(this).attr("data-state");
+    if (state==="still"){
+        $(this).attr("src", $(this).attr("data-animate"))
+        $(this).attr("data-state", "animate");
+    }
+    else{
+        $(this).attr("src", $(this).attr("data-still"))
+        $(this).attr("data-state", "still")
+    }
+})
